@@ -1,0 +1,134 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #0f172a;
+  color: white;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Main Container */
+.main-div {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  text-align: center;
+}
+
+/* Title */
+.main-div h1 {
+  font-size: 3rem;
+  margin-bottom: 30px;
+  color: #22d3ee;
+  text-shadow: 0 0 10px #22d3ee;
+}
+
+/* Search Section */
+.search {
+  width: 100%;
+}
+
+/* Input */
+.search input {
+  width: 70%;
+  max-width: 500px;
+  padding: 12px;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-right: 10px;
+  background: #1e293b;
+  color: white;
+}
+
+/* Button */
+.search button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #22d3ee;
+  color: black;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.search button:hover {
+  background: #06b6d4;
+  transform: scale(1.05);
+}
+
+/* Movie Cards Container */
+.movie-card {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+}
+
+/* Individual Card */
+.movie-card div {
+  background: #1e293b;
+  padding: 15px;
+  border-radius: 12px;
+  transition: 0.3s;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Hover Effect */
+.movie-card div:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px #22d3ee;
+}
+
+/* Movie Image */
+.movie-card img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 10px 0;
+}
+
+/* Movie Title */
+.movie-card h3 {
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+/* Loading & Error */
+.movie-card h2,
+.movie-card h3 {
+  text-align: center;
+}
+
+/* Responsive Design */
+@media(max-width:768px) {
+
+  .main-div h1 {
+    font-size: 2.2rem;
+  }
+
+  .search input {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+
+  .search button {
+    width: 100%;
+  }
+
+  .movie-card {
+    grid-template-columns: 1fr;
+  }
+}
