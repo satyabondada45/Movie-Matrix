@@ -109,7 +109,7 @@ return(
 
         <p><strong>Rating:</strong> ⭐ {movie.vote_average}</p>
 
-        <p>{movie.overview.slice(0,120)}</p>
+        <p>{movie.overview}</p>
         <button className ="Trailer-btn"onClick={()=>getTrailer(movie.id)}>Watch Trailer</button>
 
     </div>
