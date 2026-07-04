@@ -132,3 +132,57 @@ body {
     grid-template-columns: 1fr;
   }
 }
+/* TRAILER BUTTON */
+
+.Trailer-btn{
+
+    width:90%;
+
+    margin:15px auto 20px;
+
+    display:block;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #1f2937,
+        #111827
+    );
+
+    color:#d1fae5;
+
+    font-size:0.95rem;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+    border:1px solid rgba(120,255,180,0.15);
+}
+
+/* HOVER */
+
+.Trailer-btn:hover{
+
+    transform:translateY(-2px);
+
+    background:
+    linear-gradient(
+        135deg,
+        #273549,
+        #18212f
+    );
+
+    box-shadow:
+    0 8px 20px rgba(120,255,180,0.15);
+
+    border:1px solid rgba(120,255,180,0.3);
+}

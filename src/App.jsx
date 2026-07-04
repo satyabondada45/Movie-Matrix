@@ -1,69 +1,125 @@
-import {useState,useEffect} from "react"
+import { useState } from "react"
+
 function App(){
-const[movies,setMovies]=useState([])
-const[loading,setLoading]=useState(false);
-const[search,setSearch]=useState("")
-const[error,setError]=useState("")
-const[movieDetails,setMovieDetails]=useState(null)
+
+const [movies,setMovies] = useState([])
+const [loading,setLoading] = useState(false)
+const [search,setSearch] = useState("")
+const [error,setError] = useState("")
+
 async function getMovies(){
-    setLoading(true)
-    setError("")
-    try{
-const response=await fetch(`https://www.omdbapi.com/?apikey=${import.meta.env.VITE_OMDB_KEY}&s=${search}`)
-    
-    if(!response.ok){
-        throw new Error("Movie not Found")
+
+    if(search.trim() === ""){
+        setError("Please Enter Movie Name")
+        return
     }
 
-const data=await response.json()
-if(data.Response==="False"){
-    throw new Error("Movie Not Found")
-}
-console.log(data)
-setMovies(data.Search)
-setError("")
+    setLoading(true)
+    setError("")
+
+    try{
+
+        const response = await fetch(
+`https://api.themoviedb.org/3/search/movie?api_key=${import.meta.env.VITE_TMDB_KEY}&query=${search}`
+        )
+
+        const data = await response.json()
+
+        console.log(data)
+
+        if(data.results.length === 0){
+            throw new Error("Movie Not Found")
+        }
+
+        setMovies(data.results)
+
     }
 
     catch(error){
-       setError("Movie not Found")
-       setMovies([])
+
+        setError("Movie Not Found")
+        setMovies([])
+
     }
-setLoading(false)
+
+    setLoading(false)
 }
+
+async function getTrailer(id){
+    const response=await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${import.meta.env.VITE_TMDB_KEY}`)
+    const data=await response.json();
+
+    const trailer=await data.results.find((video)=>video.type==="Trailer")
+    if(trailer){
+        window.open(`https://www.youtube.com/watch?v=${trailer.key}`)
+    }
+}
+
 
 return(
 
 <div className="main-div">
-    <h1>Movie Matrix</h1>
-    <div className="search">
-<input type="text"
-placeholder="Enter movie"
-value={search}
-onChange={(e)=>setSearch(e.target.value)}/>
 
-<button onClick={getMovies}>
-    search
-    </button>
-    <div className="movie-card">
+    <h1 className="title">Movie Matrix</h1>
 
-{loading&&<h3>loading....</h3>}
-{error && <h2>{error}</h2>}
-{movies.map((data,index)=>
-<div key={data.imdbID}>
-<h3>{data.Title}</h3>
-{data.Poster!=="N/A"?
-<img src={data.Poster} width="200px" alt={data.Title}   /> :
-<h3>NO IMAGE FOUND</h3>
-} 
-<h3>{data.Year}</h3>
+    <div className="search-box">
+
+        <input
+        type="text"
+        placeholder="Enter Movie Name"
+        value={search}
+        onChange={(e)=>setSearch(e.target.value)}
+        />
+
+        <button onClick={getMovies}>
+            Search
+        </button>
+
+    </div>
+
+    {loading && <h2>Loading....</h2>}
+
+    {error && <h2>{error}</h2>}
+
+    <div className="movie-container">
+
+    {movies.map((movie)=>
+
+    <div className="movie-card" key={movie.id}>
+
+        <h2>{movie.title}</h2>
+
+        {movie.poster_path ? (
+
+        <img
+        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+        alt={movie.title}
+        width="250px"
+        />
+
+        ) : (
+
+        <h3>No Image Found</h3>
+
+        )}
+
+        <p><strong>Release Date:</strong> {movie.release_date}</p>
+
+        <p><strong>Rating:</strong> ⭐ {movie.vote_average}</p>
+
+        <p>{movie.overview}</p>
+        <button className ="Trailer-btn"onClick={()=>getTrailer(movie.id)}>Watch Trailer</button>
+
+    </div>
+
+    )}
+
+    </div>
 
 </div>
 
-)}
- </div>
-    </div>
-    </div>
-
 )
+
 }
-export default App;
+
+export default App
