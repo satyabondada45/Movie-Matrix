@@ -27,11 +27,11 @@ async function getMovies(){
 
         console.log(data)
 
-        if(data.results.length === 0){
+        if(!data.results||data.results.length === 0){
             throw new Error("Movie Not Found")
         }
 
-        setMovies(data.results)
+        setMovies(data.results.slice(0,8))
 
     }
 
@@ -52,7 +52,7 @@ async function getTrailer(id){
 
     const trailer=await data.results.find((video)=>video.type==="Trailer")
     if(trailer){
-        window.open(`https://www.youtube.com/watch?v=${trailer.key}`)
+        window.location.href=`https://www.youtube.com/watch?v=${trailer.key}`
     }
 }
 
@@ -93,6 +93,7 @@ return(
         {movie.poster_path ? (
 
         <img
+        loading="lazy"
         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
         alt={movie.title}
         width="250px"
@@ -108,7 +109,7 @@ return(
 
         <p><strong>Rating:</strong> ⭐ {movie.vote_average}</p>
 
-        <p>{movie.overview}</p>
+        <p>{movie.overview.slice(0,120)}</p>
         <button className ="Trailer-btn"onClick={()=>getTrailer(movie.id)}>Watch Trailer</button>
 
     </div>
