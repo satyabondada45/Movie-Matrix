@@ -41,8 +41,9 @@ async function getMovies(){
         setMovies([])
 
     }
-
+finally{
     setLoading(false)
+}
 }
 
 async function getTrailer(id){
